@@ -140,6 +140,27 @@ export default {
       title: 'Published At',
       description: 'Date and time when the news is published',
     },
+    {
+      name: 'isBreaking',
+      type: 'boolean',
+      title: 'Breaking News',
+      description: 'Mark as breaking news for special highlighting',
+      initialValue: false,
+    },
+    {
+      name: 'isLatest',
+      type: 'boolean',
+      title: 'Latest News',
+      description: 'Mark as latest news for priority display',
+      initialValue: false,
+    },
+    {
+      name: 'isPublished',
+      type: 'boolean',
+      title: 'Published',
+      description: 'Control whether this news is published and visible',
+      initialValue: false,
+    },
   ],
 
   preview: {

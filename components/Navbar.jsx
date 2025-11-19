@@ -5,16 +5,11 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import LanguageSwitcher from "./LanguageSwitcher";
-import {
-  Menu,
-  X,
-  ChevronDown,
-  Search,
-} from "lucide-react";
+import { Menu, X, ChevronDown, Search } from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const isUrdu = pathname.startsWith("/ur"); // detect Urdu route
+  const isUrdu = pathname.startsWith("/ur");
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [newsDropdown, setNewsDropdown] = useState(false);
@@ -26,13 +21,13 @@ export default function Navbar() {
     ? {
         home: "ہوم",
         news: "خبریں",
-        liveTv: "براہِ راست ٹی وی",
         videos: "ویڈیوز",
         more: "مزید",
         pakistan: "پاکستان",
         world: "عالم",
         business: "کاروبار",
         technology: "ٹیکنالوجی",
+        ai: "مصنوعی ذہانت",
         health: "صحت",
         climate: "ماحولیات",
         sports: "کھیل",
@@ -50,13 +45,13 @@ export default function Navbar() {
     : {
         home: "Home",
         news: "News",
-        liveTv: "Live TV",
         videos: "Videos",
         more: "More",
         pakistan: "Pakistan",
         world: "World",
         business: "Business",
         technology: "Technology",
+        ai: "AI",
         health: "Health",
         climate: "Climate",
         sports: "Sports",
@@ -77,6 +72,7 @@ export default function Navbar() {
     { name: navText.world, path: "/world-news" },
     { name: navText.business, path: "/business-news" },
     { name: navText.technology, path: "/tech-news" },
+    { name: navText.ai, path: "/ai-news" },              // ← ADDED AI
     { name: navText.health, path: "/health-news" },
     { name: navText.climate, path: "/climate-news" },
     { name: navText.sports, path: "/sports-news" },
@@ -88,7 +84,6 @@ export default function Navbar() {
     { name: navText.aboutUs, path: "/about" },
     { name: navText.contact, path: "/contact" },
     { name: navText.archives, path: "/archives" },
-    { name: navText.newsletter, path: "/newsletter" },
     { name: navText.podcasts, path: "/podcasts" },
   ];
 
@@ -107,10 +102,9 @@ export default function Navbar() {
               })}
             </span>
           </div>
-          <div className="mt-2 md:mt-0">
-            <button className="bg-red-600 text-white px-4 py-1 md:py-2 font-semibold tracking-wide hover:bg-red-700 transition">
-              {navText.subscribe}
-            </button>
+          <div className={`mt-2 md:mt-0 flex items-center gap-4 ${isUrdu ? "flex-row-reverse" : ""}`}>
+           
+            <LanguageSwitcher />
           </div>
         </div>
       </div>
@@ -128,84 +122,183 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop Nav */}
+          {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
-            <Link href={isUrdu ? "/ur" : "/"} className="font-bold text-sm hover:opacity-70 transition">{navText.home}</Link>
+            <Link href={isUrdu ? "/ur" : "/"} className="font-bold text-sm hover:opacity-70 transition">
+              {navText.home}
+            </Link>
 
             {/* News Dropdown */}
-            <div className="relative" onMouseEnter={() => setNewsDropdown(true)} onMouseLeave={() => setNewsDropdown(false)}>
+            <div
+              className="relative"
+              onMouseEnter={() => setNewsDropdown(true)}
+              onMouseLeave={() => setNewsDropdown(false)}
+            >
               <button className="flex items-center gap-1 font-bold text-sm hover:opacity-70 transition">
-                {navText.news} <ChevronDown className={`w-4 h-4 transition-transform ${newsDropdown ? "rotate-180" : ""}`} />
+                {navText.news}{" "}
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform ${newsDropdown ? "rotate-180" : ""}`}
+                />
               </button>
-              <div className={`absolute top-full ${isUrdu ? "right-0" : "left-0"} mt-2 w-56 bg-white border-2 border-black overflow-hidden transition-all duration-300 origin-top ${newsDropdown ? "opacity-100 scale-y-100 visible" : "opacity-0 scale-y-0 invisible"}`}>
+
+              <div
+                className={`absolute top-full ${isUrdu ? "right-0" : "left-0"} mt-2 w-56 bg-white border-2 border-black overflow-hidden transition-all duration-300 origin-top ${
+                  newsDropdown ? "opacity-100 scale-y-100 visible" : "opacity-0 scale-y-0 invisible"
+                }`}
+              >
                 {newsCategories.map(({ name, path }) => (
-                  <Link key={path} href={isUrdu ? `/ur${path}` : `/en${path}`} className="block px-4 py-3 font-medium text-sm border-b border-gray-200 last:border-b-0 text-black hover:bg-red-600 hover:text-white transition">
+                  <Link
+                    key={path}
+                    href={isUrdu ? `/ur${path}` : `/en${path}`}
+                    className="block px-4 py-3 font-medium text-sm border-b border-gray-200 last:border-b-0 text-black hover:bg-red-600 hover:text-white transition"
+                  >
                     {name}
                   </Link>
                 ))}
               </div>
             </div>
 
-            <Link href="/live" className="font-bold text-sm hover:opacity-70 transition">{navText.liveTv}</Link>
-            <Link href="/videos" className="font-bold text-sm hover:opacity-70 transition">{navText.videos}</Link>
+            <Link href="/videos" className="font-bold text-sm hover:opacity-70 transition">
+              {navText.videos}
+            </Link>
+          
+            <Link href={isUrdu ? "/ur/contact" : "/en/contact"} className="font-bold text-sm hover:opacity-70 transition">
+              {navText.contact}
+            </Link>
 
             {/* More Dropdown */}
-            <div className="relative" onMouseEnter={() => setMoreDropdown(true)} onMouseLeave={() => setMoreDropdown(false)}>
+            <div
+              className="relative"
+              onMouseEnter={() => setMoreDropdown(true)}
+              onMouseLeave={() => setMoreDropdown(false)}
+            >
               <button className="flex items-center gap-1 font-bold text-sm hover:opacity-70 transition">
-                {navText.more} <ChevronDown className={`w-4 h-4 transition-transform ${moreDropdown ? "rotate-180" : ""}`} />
+                {navText.more}{" "}
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform ${moreDropdown ? "rotate-180" : ""}`}
+                />
               </button>
-              <div className={`absolute top-full ${isUrdu ? "left-0" : "right-0"} mt-2 w-48 bg-white border-2 border-black overflow-hidden transition-all duration-300 origin-top ${moreDropdown ? "opacity-100 scale-y-100 visible" : "opacity-0 scale-y-0 invisible"}`}>
+
+              <div
+                className={`absolute top-full ${isUrdu ? "left-0" : "right-0"} mt-2 w-48 bg-white border-2 border-black overflow-hidden transition-all duration-300 origin-top ${
+                  moreDropdown ? "opacity-100 scale-y-100 visible" : "opacity-0 scale-y-0 invisible"
+                }`}
+              >
                 {moreLinks.map(({ name, path }) => (
-                  <Link key={path} href={isUrdu ? `/ur${path}` : `/en${path}`} className="block px-4 py-3 font-medium text-sm border-b border-gray-200 last:border-b-0 text-black hover:bg-red-600 hover:text-white transition">
+                  <Link
+                    key={path}
+                    href={isUrdu ? `/ur${path}` : `/en${path}`}
+                    className="block px-4 py-3 font-medium text-sm border-b border-gray-200 last:border-b-0 text-black hover:bg-red-600 hover:text-white transition"
+                  >
                     {name}
                   </Link>
                 ))}
               </div>
             </div>
 
-            <LanguageSwitcher />
           </div>
 
-          {/* Mobile Menu & Search */}
-          <div className="flex items-center gap-4">
+          {/* Search & Mobile Menu */}
+          <div className={`flex items-center gap-4 ${isUrdu ? "flex-row-reverse" : ""}`}>
             <button className="text-black hover:opacity-70 transition">
               <Search className="w-5 h-5" />
             </button>
-            <button className="lg:hidden text-black hover:opacity-70 transition" onClick={() => setMobileOpen(!mobileOpen)}>
+            <button
+              className="lg:hidden text-black hover:opacity-70 transition"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Toggle Menu"
+            >
               {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div className={`lg:hidden border-t-2 border-black overflow-hidden transition-all duration-500 ease-in-out ${mobileOpen ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"}`}>
-        <div className={`px-4 py-4 space-y-1 bg-white ${isUrdu ? "text-right" : "text-left"}`}>
-          <Link href={isUrdu ? "/ur" : "/"} className="block px-4 py-3 font-bold text-sm border-b border-gray-200 text-black hover:bg-gray-50 transition">{navText.home}</Link>
+      {/* Mobile Dropdown */}
+      <div
+        className={`lg:hidden border-t-2 border-black overflow-hidden transition-all duration-500 ease-in-out ${
+          mobileOpen ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className={`px-4 py-4 space-y-1 bg-white ${isUrdu ? "text-right" : "text-left"}`} dir={isUrdu ? "rtl" : "ltr"}>
+          <Link
+            href={isUrdu ? "/ur" : "/"}
+            className="block px-4 py-3 font-bold text-sm border-b border-gray-200 text-black hover:bg-gray-50 transition"
+          >
+            {navText.home}
+          </Link>
 
           {/* Mobile News Dropdown */}
           <div className="border-b border-gray-200">
-            <button onClick={() => setMobileNewsOpen(!mobileNewsOpen)} className="w-full flex items-center justify-between px-4 py-3 font-bold text-sm text-black hover:bg-gray-50 transition">
-              {navText.news} <ChevronDown className={`w-4 h-4 transition-transform ${mobileNewsOpen ? "rotate-180" : ""}`} />
+            <button
+              onClick={() => setMobileNewsOpen(!mobileNewsOpen)}
+              className="w-full flex items-center justify-between px-4 py-3 font-bold text-sm text-black hover:bg-gray-50 transition"
+            >
+              {navText.news}{" "}
+              <ChevronDown
+                className={`w-4 h-4 transition-transform ${mobileNewsOpen ? "rotate-180" : ""}`}
+              />
             </button>
-            <div className={`bg-gray-50 overflow-hidden transition-all duration-300 ${mobileNewsOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
+            <div
+              className={`bg-gray-50 overflow-hidden transition-all duration-300 ${
+                mobileNewsOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+              }`}
+            >
               {newsCategories.map(({ name, path }) => (
-                <Link key={path} href={isUrdu ? `/ur${path}` : `/en${path}`} className="block px-8 py-2 text-sm font-medium text-black hover:bg-gray-100 transition">{name}</Link>
+                <Link
+                  key={path}
+                  href={isUrdu ? `/ur${path}` : `/en${path}`}
+                  className="block px-8 py-2 text-sm font-medium text-black hover:bg-gray-100 transition"
+                >
+                  {name}
+                </Link>
               ))}
             </div>
           </div>
 
-          <Link href="/live" className="block px-4 py-3 font-bold text-sm border-b border-gray-200 text-black hover:bg-gray-50 transition">{navText.liveTv}</Link>
-          <Link href="/videos" className="block px-4 py-3 font-bold text-sm border-b border-gray-200 text-black hover:bg-gray-50 transition">{navText.videos}</Link>
+          <Link
+            href="/videos"
+            className="block px-4 py-3 font-bold text-sm border-b border-gray-200 text-black hover:bg-gray-50 transition"
+          >
+            {navText.videos}
+          </Link>
+          <Link
+            href={isUrdu ? "/ur/about" : "/en/about"}
+            className="block px-4 py-3 font-bold text-sm border-b border-gray-200 text-black hover:bg-gray-50 transition"
+          >
+            {navText.aboutUs}
+          </Link>
+          <Link
+            href={isUrdu ? "/ur/contact" : "/en/contact"}
+            className="block px-4 py-3 font-bold text-sm border-b border-gray-200 text-black hover:bg-gray-50 transition"
+          >
+            {navText.contact}
+          </Link>
 
           {/* Mobile More Dropdown */}
           <div className="border-b border-gray-200">
-            <button onClick={() => setMobileMoreOpen(!mobileMoreOpen)} className="w-full flex items-center justify-between px-4 py-3 font-bold text-sm text-black hover:bg-gray-50 transition">
-              {navText.more} <ChevronDown className={`w-4 h-4 transition-transform ${mobileMoreOpen ? "rotate-180" : ""}`} />
+            <button
+              onClick={() => setMobileMoreOpen(!mobileMoreOpen)}
+              className="w-full flex items-center justify-between px-4 py-3 font-bold text-sm text-black hover:bg-gray-50 transition"
+            >
+              {navText.more}{" "}
+              <ChevronDown
+                className={`w-4 h-4 transition-transform ${mobileMoreOpen ? "rotate-180" : ""}`}
+              />
             </button>
-            <div className={`bg-gray-50 overflow-hidden transition-all duration-300 ${mobileMoreOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"}`}>
+            <div
+              className={`bg-gray-50 overflow-hidden transition-all duration-300 ${
+                mobileMoreOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+              }`}
+            >
               {moreLinks.map(({ name, path }) => (
-                <Link key={path} href={isUrdu ? `/ur${path}` : `/en${path}`} className="block px-8 py-2 text-sm font-medium text-black hover:bg-gray-100 transition">{name}</Link>
+                <Link
+                  key={path}
+                  href={isUrdu ? `/ur${path}` : `/en${path}`}
+                  className="block px-8 py-2 text-sm font-medium text-black hover:bg-gray-100 transition"
+                >
+                  {name}
+                </Link>
               ))}
             </div>
           </div>
