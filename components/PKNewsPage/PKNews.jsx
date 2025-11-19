@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import ScrollBasedAnimation from "@/components/ScrollBasedAnimation";
+import ScrollBasedAnimation from "../ScrollBasedAnimations";
 import sanityClient from "@/lib/sanityClient";
 import { usePathname } from "next/navigation";
 
