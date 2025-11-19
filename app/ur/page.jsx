@@ -1,7 +1,7 @@
 import React from 'react'
 
 import BreakingNews from '@/components/Home/BreakingNews';
-import Multimedia from '@/components/Home/Multimedia';
+import LatestNews from '@/components/Home/LatestNews';
 import FeaturedStories from '@/components/Home/FeaturedStories';
 import BusinessNews from '@/components/Home/Business';
 import PKNews from '@/components/Home/PKNews';
@@ -60,7 +60,7 @@ const Home = () => {
     <div dir="rtl">
       <BreakingNews/>
       <FeaturedStories/>
-      <Multimedia/>
+      <LatestNews/>
       <BusinessNews/>
       <PKNews/>
       <WorldNews/>

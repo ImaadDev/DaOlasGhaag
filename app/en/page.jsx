@@ -1,7 +1,7 @@
 import React from 'react'
 import BreakingNews from '@/components/Home/BreakingNews';
 import FeaturedStories from '@/components/Home/FeaturedStories';
-import Multimedia from '@/components/Home/Multimedia';
+import LatestNews from '@/components/Home/LatestNews';
 import BusinessNews from '@/components/Home/Business';
 import PKNews from '@/components/Home/PKNews';
 import WorldNews from '@/components/Home/WorldNews';
@@ -59,7 +59,7 @@ const Home = () => {
     <>
       <BreakingNews/>
       <FeaturedStories/>
-      <Multimedia/>
+      <LatestNews/>
       <BusinessNews/>
       <PKNews/>
       <WorldNews/>

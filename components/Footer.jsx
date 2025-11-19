@@ -1,13 +1,45 @@
 "use client";
 
-import ScrollAnimation from "../components/ScrollBasedAnimations"; // adjust path
-import Image from "next/image";
+import React, { useState, useEffect } from "react";
+// import ScrollAnimation from "../components/ScrollBasedAnimations"; // Mocked for runnable code
 import { Facebook, Instagram, Youtube, Twitter } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+// import Link from "next/link"; // Replaced with <a>
+// import { usePathname } from "next/navigation"; // Replaced with simulation
+
+/**
+ * Custom hook to simulate usePathname by reading window.location.pathname.
+ */
+const usePathnameSimulation = () => {
+  const [pathname, setPathname] = useState('/');
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setPathname(window.location.pathname || '/');
+    }
+  }, []);
+  
+  return pathname;
+};
+
+// Mock Component for ScrollAnimation
+const ScrollAnimation = ({ children, direction, delay }) => {
+    // In a real environment, this component would handle animations.
+    // Here, we return the children directly.
+    return <div className={`animate-fade-in-up duration-[${delay * 1000}ms]`}>{children}</div>;
+};
+
+// Helper component for standard anchor links
+const CustomLink = ({ href, children, className = "" }) => (
+    <a 
+        href={href} 
+        className={`hover:text-red-400 font-medium transition-colors duration-300 ${className}`}
+    >
+        {children}
+    </a>
+);
 
 export default function Footer() {
-  const pathname = usePathname();
+  const pathname = usePathnameSimulation();
   const isUrdu = pathname.startsWith("/ur"); // Detect Urdu route
 
   // Footer text for EN/UR
@@ -54,23 +86,29 @@ export default function Footer() {
       };
 
   return (
-    <footer className={`bg-red-700 text-gray-700 ${isUrdu ? "rtl" : "ltr"}`}>
+    // Updated footer background to dark gray
+    <footer className={`bg-red-800 text-white ${isUrdu ? "rtl" : "ltr"} border-t-4 border-red-700 font-sans`}>
       <ScrollAnimation direction="up" delay={0.3}>
-        <div className="max-w-7xl mx-auto px-6 md:px-16 py-16 grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="max-w-7xl mx-auto px-6 md:px-16 py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
           
           {/* Logo & About */}
           <ScrollAnimation direction="left" delay={0.3}>
-            <div className="flex items-start gap-4">
-              <div className="relative w-14 h-14 flex-shrink-0">
-                <Image
-                  src="/logo.png"
-                  alt="Logo"
-                  fill
-                  className="object-contain"
-                  priority
-                />
+            <div className="flex flex-col items-start gap-4">
+              
+              {/* Logo Area */}
+              <div className="flex items-center gap-2">
+                {/* Image Placeholder/Logo Simulation */}
+                <div className="relative w-12 h-12 flex-shrink-0">
+                    {/* Replaced Next/Image with native <img> */}
+                    <img src="/logo.png" alt="Da Olass Ghag Logo" className="object-contain w-full h-full" />
+                </div>
+                <span className="text-xl font-black tracking-tighter text-white">
+                  DA OLASS <span className="bg-red-700 text-white px-1 py-0.5 ml-0.5 inline-block text-lg">GHAG</span>
+                </span>
               </div>
-              <p className="text-gray-300 text-sm leading-relaxed max-w-xs">
+
+              {/* About Text */}
+              <p className="text-gray-400 text-sm leading-relaxed max-w-xs pt-2">
                 {footerText.about}
               </p>
             </div>
@@ -79,15 +117,16 @@ export default function Footer() {
           {/* Quick Links */}
           <ScrollAnimation direction="up" delay={0.4}>
             <div>
-              <h3 className="text-lg font-bold text-white mb-4">
+              {/* Strong Red Underline Heading */}
+              <h3 className="text-lg font-extrabold text-white mb-6 uppercase border-b-2 border-red-700 pb-1 inline-block">
                 {footerText.quickLinks}
               </h3>
-              <ul className="space-y-2 text-gray-300 text-sm">
-                <li><Link href="/" className="hover:text-red-600 transition">{footerText.home}</Link></li>
-                <li><Link href="/videos" className="hover:text-red-600 transition">{footerText.videos}</Link></li>
-                <li><Link href="/podcasts" className="hover:text-red-600 transition">{footerText.podcasts}</Link></li>
-                <li><Link href="/environment" className="hover:text-red-600 transition">Environment</Link></li>
-                <li><Link href="/contact" className="hover:text-red-600 transition">{footerText.contact}</Link></li>
+              <ul className="space-y-3 text-gray-300 text-sm">
+                <li><CustomLink href="/">{footerText.home}</CustomLink></li>
+                <li><CustomLink href="/videos">{footerText.videos}</CustomLink></li>
+                <li><CustomLink href="/podcasts">{footerText.podcasts}</CustomLink></li>
+                <li><CustomLink href="/environment">Environment</CustomLink></li>
+                <li><CustomLink href="/contact">{footerText.contact}</CustomLink></li>
               </ul>
             </div>
           </ScrollAnimation>
@@ -95,65 +134,74 @@ export default function Footer() {
           {/* Categories */}
           <ScrollAnimation direction="up" delay={0.5}>
             <div>
-              <h3 className="text-lg font-bold text-white mb-4">{footerText.categories}</h3>
-              <ul className="space-y-2 text-gray-300 text-sm">
-                <li><Link href="/videos?category=Business" className="hover:text-red-600 transition">{footerText.business}</Link></li>
-                <li><Link href="/videos?category=Technology" className="hover:text-red-600 transition">{footerText.technology}</Link></li>
-                <li><Link href="/videos?category=Health" className="hover:text-red-600 transition">{footerText.health}</Link></li>
-                <li><Link href="/videos?category=Sports" className="hover:text-red-600 transition">{footerText.sports}</Link></li>
-                <li><Link href="/videos?category=Entertainment" className="hover:text-red-600 transition">{footerText.entertainment}</Link></li>
+               {/* Strong Red Underline Heading */}
+              <h3 className="text-lg font-extrabold text-white mb-6 uppercase border-b-2 border-red-700 pb-1 inline-block">
+                {footerText.categories}
+              </h3>
+              <ul className="space-y-3 text-gray-300 text-sm">
+                <li><CustomLink href="/videos?category=Business">{footerText.business}</CustomLink></li>
+                <li><CustomLink href="/videos?category=Technology">{footerText.technology}</CustomLink></li>
+                <li><CustomLink href="/videos?category=Health">{footerText.health}</CustomLink></li>
+                <li><CustomLink href="/videos?category=Sports">{footerText.sports}</CustomLink></li>
+                <li><CustomLink href="/videos?category=Entertainment">{footerText.entertainment}</CustomLink></li>
               </ul>
             </div>
           </ScrollAnimation>
 
           {/* Contact & Social */}
           <ScrollAnimation direction="right" delay={0.6}>
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-white mb-4 border-b border-red-600 inline-block pb-1">
+            <div className="space-y-6">
+               {/* Strong Red Underline Heading */}
+              <h3 className="text-lg font-extrabold text-white mb-6 uppercase border-b-2 border-red-700 pb-1 inline-block">
                 {footerText.contactTitle}
               </h3>
-              <div className="space-y-2 text-sm">
-                <p className="flex items-center gap-2 text-gray-300">
-                  <span className="text-red-500">📧</span> {footerText.email}
+              <div className="space-y-3 text-sm">
+                {/* Contact Info with enhanced text color */}
+                <p className="flex items-center gap-3 text-gray-300">
+                  <span className="text-red-600 flex-shrink-0">📧</span> <span className="text-white font-medium">{footerText.email}</span>
                 </p>
-                <p className="flex items-center gap-2 text-gray-300">
-                  <span className="text-red-500">📞</span> {footerText.phone}
+                <p className="flex items-center gap-3 text-gray-300">
+                  <span className="text-red-600 flex-shrink-0">📞</span> <span className="text-white font-medium">{footerText.phone}</span>
                 </p>
               </div>
 
-              {/* Social Icons */}
-              <div className="flex items-center gap-5 mt-4">
-                <a href="https://www.facebook.com/mudam675" className="p-2 bg-blue-800 rounded-full hover:bg-blue-900 transition" aria-label="Facebook">
-                  <Facebook className="w-4 h-4 text-white" />
+              {/* Social Icons - Clean, High-Contrast Style */}
+              <div className="flex items-center gap-3 pt-2">
+                {/* Base Black/Gray, Red Hover */}
+                <a href="https://www.facebook.com/mudam675" className="p-2 border-2 border-white text-white hover:bg-red-700 hover:border-red-700 transition-all duration-300" aria-label="Facebook">
+                  <Facebook className="w-5 h-5" />
                 </a>
-                <a href="https://www.instagram.com/da_olass_ghag?igsh=MXAwa2R1a3V3cnUxMw%3D%3D&utm_source=qr" className="p-2 bg-pink-800 rounded-full hover:bg-pink-600 transition" aria-label="Instagram">
-                  <Instagram className="w-4 h-4 text-white" />
+                <a href="https://www.instagram.com/da_olass_ghag?igsh=MXAwa2R1a3V3cnUxMw%3D%3D&utm_source=qr" className="p-2 border-2 border-white text-white hover:bg-red-700 hover:border-red-700 transition-all duration-300" aria-label="Instagram">
+                  <Instagram className="w-5 h-5" />
                 </a>
-                <a href="https://x.com/da_olass_ghag?s=11" className="p-2 bg-black rounded-full hover:bg-gray-800 transition" aria-label="Twitter">
-                  <Twitter className="w-4 h-4 text-white" />
+                <a href="https://x.com/da_olass_ghag?s=11" className="p-2 border-2 border-white text-white hover:bg-red-700 hover:border-red-700 transition-all duration-300" aria-label="Twitter">
+                  <Twitter className="w-5 h-5" />
                 </a>
-                <a href="https://www.youtube.com/@DaOlassGhag" className="p-2 bg-white rounded-full hover:bg-gray-600 transition" aria-label="YouTube">
-                  <Youtube className="w-4 h-4 text-red-600" />
+                <a href="https://www.youtube.com/@DaOlassGhag" className="p-2 border-2 border-white text-white hover:bg-red-700 hover:border-red-700 transition-all duration-300" aria-label="YouTube">
+                  <Youtube className="w-5 h-5" />
                 </a>
-              </div>
-
-              {/* Developer Credit */}
-              <div className="pt-4 border-t border-gray-800 mt-4">
-                <p className="text-sm text-gray-300 tracking-wide text-center">
-                  {footerText.developedBy} <span className="text-red-500">♥</span> by{" "}
-                  <a href="https://www.imadkhan.online" target="_blank" rel="noopener noreferrer" className="text-white font-semibold hover:text-red-400 transition-colors duration-300">
-                    {footerText.developerName}
-                  </a>
-                </p>
               </div>
             </div>
           </ScrollAnimation>
         </div>
 
-        {/* Bottom */}
+        {/* Bottom - Separated Copyright & Developer Credit */}
         <ScrollAnimation direction="up" delay={0.7}>
-          <div className="border-t border-gray-800 mt-8 pt-4 text-center text-white text-sm">
-            &copy; {new Date().getFullYear()} Da Olass Ghag. {footerText.copyright}
+          <div className="border-t-2 border-gray-800 pt-6 pb-4">
+            <div className="max-w-7xl mx-auto px-6 md:px-16 flex flex-col md:flex-row items-center justify-between text-white text-sm">
+                {/* Copyright */}
+                <div className="order-2 md:order-1 mt-4 md:mt-0 text-gray-400">
+                    &copy; {new Date().getFullYear()} Da Olass Ghag. {footerText.copyright}
+                </div>
+
+                {/* Developer Credit */}
+                <div className={`order-1 md:order-2 text-center text-gray-400 tracking-wide ${isUrdu ? "md:text-right" : "md:text-left"}`}>
+                    {footerText.developedBy} <span className="text-red-500">♥</span> by{" "}
+                    <a href="https://www.imadkhan.online" target="_blank" rel="noopener noreferrer" className="text-white font-semibold hover:text-red-400 transition-colors duration-300">
+                      {footerText.developerName}
+                    </a>
+                </div>
+            </div>
           </div>
         </ScrollAnimation>
       </ScrollAnimation>
