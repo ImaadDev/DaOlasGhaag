@@ -28,7 +28,7 @@ export const metadata = {
     siteName: "Da Olass Ghag",
     images: [
       {
-        url: "https://daolasghaag.com/og-image.jpg",
+        url: "https://daolasghaag.com/logo.png",
         width: 1200,
         height: 630,
         alt: "Da Olass Ghag - Latest News",
@@ -42,7 +42,7 @@ export const metadata = {
     title: "Da Olass Ghag – Latest Verified News & Global Updates",
     description:
       "Reliable news coverage on Environment, AI, Fact-Check, Pakistan, Saudi Arabia, Sports & Weather.",
-    images: ["https://daolasghaag.com/og-image.jpg"],
+    images: ["https://daolasghaag.com/logo.png"],
     creator: "@da_olass_ghag",
   },
 };

@@ -23,7 +23,7 @@ export const metadata = {
     siteName: 'Da Olass Ghag',
     images: [
       {
-        url: 'https://daolasghaag.com/og-image.jpg',
+        url: 'https://daolasghaag.com/logo.png',
         width: 1200,
         height: 630,
         alt: 'Da Olass Ghag - Latest News',
@@ -36,7 +36,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Da Olass Ghag – Latest Verified News & Global Updates',
     description: 'Reliable news coverage on Environment, AI, Fact-Check, Pakistan, Saudi Arabia, Sports & Weather.',
-    images: ['https://daolasghaag.com/og-image.jpg'],
+    images: ['https://daolasghaag.com/logo.png'],
     creator: '@da_olass_ghag',
   },
   alternates: {
@@ -49,36 +49,7 @@ export const metadata = {
 };
 
 const Home = () => {
-  const featuredArticles = [
-    {
-      id: 1,
-      title: "Breaking News: Major Event Shakes the World",
-      excerpt: "A significant event has occurred that will impact global affairs...",
-      image: "/placeholder-news.jpg",
-      category: "World",
-      date: "2024-01-15",
-      slug: "/en/news/breaking-news"
-    },
-    {
-      id: 2,
-      title: "Technology Advances in Artificial Intelligence",
-      excerpt: "New breakthroughs in AI technology promise to revolutionize industries...",
-      image: "/placeholder-tech.jpg",
-      category: "Technology",
-      date: "2024-01-14",
-      slug: "/en/news/ai-advances"
-    },
-    {
-      id: 3,
-      title: "Sports Championship Finals Recap",
-      excerpt: "The finals delivered an unforgettable showdown between top teams...",
-      image: "/placeholder-sports.jpg",
-      category: "Sports",
-      date: "2024-01-13",
-      slug: "/en/news/sports-finals"
-    }
-  ];
-
+ 
   return (
     <>
       <BreakingNews/>

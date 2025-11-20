@@ -24,7 +24,7 @@ export const metadata = {
     siteName: 'ڈا اولس غگ',
     images: [
       {
-        url: 'https://daolasghaag.com/og-image.jpg',
+        url: 'https://daolasghaag.com/logo.png',
         width: 1200,
         height: 630,
         alt: 'ڈا اولس غگ - تازہ ترین خبریں',
@@ -37,7 +37,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'ڈا اولس غگ – تصدیق شدہ خبریں اور عالمی اپ ڈیٹس',
     description: 'ماحولیات، اے آئی، فیکٹ چیک، پاکستان، سعودی عرب، کھیلوں اور موسم پر قابل اعتماد خبریں کوریج۔',
-    images: ['https://daolasghaag.com/og-image.jpg'],
+    images: ['https://daolasghaag.com/logo.png'],
     creator: '@da_olass_ghag',
   },
   alternates: {
@@ -50,36 +50,7 @@ export const metadata = {
 };
 
 const Home = () => {
-  const featuredArticles = [
-    {
-      id: 1,
-      title: "توڑنے والی خبر: دنیا کو ہلا دینے والا بڑا واقعہ",
-      excerpt: "ایک اہم واقعہ پیش آیا ہے جو عالمی امور کو متاثر کرے گا...",
-      image: "/placeholder-news.jpg",
-      category: "دنیا",
-      date: "2024-01-15",
-      slug: "/ur/news/breaking-news"
-    },
-    {
-      id: 2,
-      title: "مصنوعی ذہانت میں ٹیکنالوجی کی پیش رفت",
-      excerpt: "مصنوعی ذہانت کی ٹیکنالوجی میں نئی کامیابیاں صنعتوں کو تبدیل کرنے کا وعدہ کرتی ہیں...",
-      image: "/placeholder-tech.jpg",
-      category: "ٹیکنالوجی",
-      date: "2024-01-14",
-      slug: "/ur/news/ai-advances"
-    },
-    {
-      id: 3,
-      title: "کھیلوں کی چیمپئن شپ فائنلز کا خلاصہ",
-      excerpt: "فائنلز نے ٹاپ ٹیموں کے درمیان ایک ناقابل فراموش مقابلہ پیش کیا...",
-      image: "/placeholder-sports.jpg",
-      category: "کھیل",
-      date: "2024-01-13",
-      slug: "/ur/news/sports-finals"
-    }
-  ];
-
+ 
   return (
     <div dir="rtl">
       <BreakingNews/>
