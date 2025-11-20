@@ -51,12 +51,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Manifest for PWA */}
-        <link rel="manifest" href="/manifest.json" />
-
+       
         {/* Favicon and Icons */}
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/logo.png" />
+         {/* Manifest for PWA */}
+        <link rel="manifest" href="/manifest.json" />
+
 
         {/* JSON-LD Schema */}
         <script
