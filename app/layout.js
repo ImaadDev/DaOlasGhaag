@@ -2,32 +2,28 @@ import { Cairo } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 const cairo = Cairo({
-  subsets: ['latin', 'arabic'],
-  weight: ['400', '700'], // you can add multiple weights
-  variable: '--font-cairo', // optional: CSS variable
+  subsets: ["latin", "arabic"],
+  weight: ["400", "700"],
+  variable: "--font-cairo",
 });
 
 export const metadata = {
   title: "Da Olass Ghag – Latest News on Environment, AI, Fact Check, Pakistan, Saudi Arabia, Global Updates, Sports & Weather",
-  description: "Da Olass Ghag is your trusted digital news platform covering Environment, Artificial Intelligence, Fact-Check reports, Pakistan & Saudi News, Global Affairs, Sports, and Weather Updates. Fast, reliable, and available on all social media platforms.",
-  keywords: "Da Olass Ghag, Da Olass Ghag news, Pakistan news, Saudi news, global news, AI news, environment news, fact check Pakistan, breaking news Pakistan, Urdu news, Pashto news, sports news, weather updates, digital journalism Pakistan, online news website, trustworthy news Pakistan, technology news, climate change news",
-  authors: [{ name: "Da Olass Ghag" }],
-  creator: "Da Olass Ghag",
-  publisher: "Da Olass Ghag",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL('https://daolasghaag.com'),
+  description:
+    "Da Olass Ghag is your trusted digital news platform covering Environment, Artificial Intelligence, Fact-Check reports, Pakistan & Saudi News, Global Affairs, Sports, and Weather Updates.",
+  keywords:
+    "Da Olass Ghag, Da Olass Ghag news, Pakistan news, Saudi news, global news, AI news, environment news, fact check Pakistan, breaking news Pakistan, Urdu news, Pashto news, sports news, weather updates, digital journalism Pakistan, online news website, trustworthy news Pakistan, technology news, climate change news",
+  metadataBase: new URL("https://daolasghaag.com"),
   alternates: {
-    canonical: 'https://daolasghaag.com',
+    canonical: "https://daolasghaag.com",
   },
   openGraph: {
     title: "Da Olass Ghag – Latest Verified News & Global Updates",
-    description: "Reliable news coverage on Environment, AI, Fact-Check, Pakistan, Saudi Arabia, Sports & Weather.",
+    description:
+      "Reliable news coverage on Environment, AI, Fact-Check, Pakistan, Saudi Arabia, Sports & Weather.",
     url: "https://daolasghaag.com",
     siteName: "Da Olass Ghag",
     images: [
@@ -44,25 +40,10 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Da Olass Ghag – Latest Verified News & Global Updates",
-    description: "Reliable news coverage on Environment, AI, Fact-Check, Pakistan, Saudi Arabia, Sports & Weather.",
+    description:
+      "Reliable news coverage on Environment, AI, Fact-Check, Pakistan, Saudi Arabia, Sports & Weather.",
     images: ["https://daolasghaag.com/og-image.jpg"],
     creator: "@da_olass_ghag",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  verification: {
-    google: 'your-google-verification-code',
-    yandex: 'your-yandex-verification-code',
-    yahoo: 'your-yahoo-verification-code',
   },
 };
 
@@ -70,33 +51,35 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/* JSON-LD Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "NewsMediaOrganization",
-              "name": "Da Olass Ghag",
-              "foundingDate": "2017",
-              "url": "https://daolasghaag.com",
-              "logo": "https://daolasghaag.com/logo.png",
-              "description": "Da Olass Ghag, established in 2017, is a digital news platform covering Environment, AI, Fact-Check, Pakistan, Saudi Arabia, Global News, Sports, and Weather.",
-              "sameAs": [
+              name: "Da Olass Ghag",
+              foundingDate: "2017",
+              url: "https://daolasghaag.com",
+              logo: "https://daolasghaag.com/logo.png",
+              sameAs: [
                 "https://www.facebook.com/mudam675",
-                "https://www.instagram.com/da_olass_ghag?igsh=MXAwa2R1a3V3cnUxMw%3D%3D&utm_source=qr",
-                "https://x.com/da_olass_ghag?s=11",
-                "https://www.youtube.com/@DaOlassGhag"
-              ]
-            })
+                "https://www.instagram.com/da_olass_ghag",
+                "https://x.com/da_olass_ghag",
+                "https://www.youtube.com/@DaOlassGhag",
+              ],
+            }),
           }}
         />
+
+        {/* GOOGLE ANALYTICS SCRIPTS */}
+        <GoogleAnalytics GA_ID={process.env.NEXT_PUBLIC_GA_ID} />
       </head>
-      <body
-        className={`${cairo.variable} antialiased`}
-      >
-        <Navbar/>
+
+      <body className={`${cairo.variable} antialiased`}>
+        <Navbar />
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );

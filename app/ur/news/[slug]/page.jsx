@@ -5,7 +5,7 @@ import sanityClient from '@/lib/sanityClient'
 export async function generateMetadata({ params }) {
   try {
     const query = `*[_type == "news" && slug.current == $slug][0]{
-      title, summary, publishedAt, images, categories
+      title, summary, publishedAt, images, categories, videoUrl
     }`;
     const news = await sanityClient.fetch(query, { slug: params.slug });
 

@@ -94,6 +94,12 @@ export default {
       },
     },
     {
+      name: 'videoUrl',
+      type: 'url',
+      title: 'Video URL',
+      description: 'YouTube or other video URL for this news article (optional)',
+    },
+    {
       name: 'sections',
       type: 'array',
       title: 'Sections',
