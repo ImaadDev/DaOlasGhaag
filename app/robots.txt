@@ -1,0 +1,26 @@
+User-agent: *
+Allow: /
+
+# Block access to admin/studio areas
+Disallow: /studio/
+Disallow: /admin/
+
+# Block access to API routes
+Disallow: /api/
+
+# Block access to Next.js internal routes
+Disallow: /_next/
+Disallow: /_vercel/
+
+# Allow access to all content pages
+Allow: /en/
+Allow: /ur/
+Allow: /en/news/
+Allow: /ur/news/
+Allow: /en/videos/
+Allow: /ur/videos/
+Allow: /en/podcasts/
+Allow: /ur/podcasts/
+
+# Sitemap location
+Sitemap: https://daolasghaag.com/sitemap.xml

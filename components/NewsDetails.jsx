@@ -86,35 +86,58 @@ export default function NewsDetails() {
     return (match && match[2].length === 11) ? match[2] : null;
   };
 
-  useEffect(() => {
-    async function fetchNews() {
-      try {
-        const query = `*[_type == "news" && slug.current == $slug][0]{
-          title, summary, description, images[]{asset->{url, metadata{dimensions{width, height}}}},
-          sections[]{title, content}, categories, publishedAt, author->{name, bio, image{asset->{url}}}, videoUrl
-        }`;
-        const data = await sanityClient.fetch(query, { slug: params.slug });
-        setNewsItem(data);
+useEffect(() => {
+  async function fetchNews() {
+    try {
+      // 1️⃣ Fetch the news item by slug
+      const query = `*[_type == "news" && slug.current == $slug][0]{
+        title,
+        summary,
+        description,
+        images[]{asset->{url, metadata{dimensions{width, height}}}},
+        sections[]{title, content},
+        categories,
+        publishedAt,
+        author->{name, bio, image{asset->{url}}},
+        videoUrl
+      }`;
 
-        // Fetch related news based on categories
-        if (data?.categories?.length > 0) {
-          const relatedQuery = `*[_type == "news" && slug.current != $slug && isPublished == true && count(categories[@ in $categories]) > 0] | order(publishedAt desc)[0...4]{
-            _id, title, summary, slug, publishedAt, images
-          }`;
-          const relatedData = await sanityClient.fetch(relatedQuery, {
-            slug: params.slug,
-            categories: data.categories
-          });
-          setRelatedNews(relatedData || []);
-        }
-      } catch (error) {
-        console.error("Error fetching news:", error);
-      } finally {
-        setLoading(false);
+      const data = await sanityClient.fetch(query, { slug: params.slug });
+      setNewsItem(data);
+
+      // 2️⃣ Fetch related news filtered by SAME category
+      if (data?.categories && data.categories.length > 0) {
+        const relatedQuery = `*[
+          _type == "news" &&
+          slug.current != $slug &&
+          isPublished == true &&
+          count(categories[@ in $categories]) > 0
+        ] | order(publishedAt desc)[0...4] {
+          _id,
+          title,
+          summary,
+          slug,
+          publishedAt,
+          images[]{asset->{url}}
+        }`;
+
+        const relatedData = await sanityClient.fetch(relatedQuery, {
+          slug: params.slug,
+          categories: data.categories,
+        });
+
+        setRelatedNews(relatedData || []);
       }
+    } catch (error) {
+      console.error("Error fetching news:", error);
+    } finally {
+      setLoading(false);
     }
-    fetchNews();
-  }, [params.slug]);
+  }
+
+  fetchNews();
+}, [params.slug]);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -415,16 +438,14 @@ export default function NewsDetails() {
                       className="block group"
                     >
                       <div className={`flex items-start gap-4 ${isUrdu ? 'flex-row-reverse' : ''}`}>
-                        {news.images?.[0] && (
-                          <div className="relative w-20 h-20 flex-shrink-0 border border-gray-200">
-                            <Image
-                              src={news.images[0].asset.url}
-                              alt={getLocalizedContent(news.title)}
-                              fill
-                              className="object-cover object-center group-hover:opacity-80 transition-opacity duration-300"
-                            />
-                          </div>
-                        )}
+                        <div className="relative w-20 h-20 flex-shrink-0 border border-gray-200 bg-gray-100">
+                          <Image
+                            src={news.images?.[0]?.asset?.url || "/placeholder-news.jpg"}
+                            alt={getLocalizedContent(news.title)}
+                            fill
+                            className="object-cover object-center group-hover:opacity-80 transition-opacity duration-300"
+                          />
+                        </div>
                         <div className={`flex-1 ${isUrdu ? 'text-right' : 'text-left'}`}>
                           <h4 className="text-base font-semibold leading-snug group-hover:text-[#B80000] transition-colors line-clamp-3">
                             {getLocalizedContent(news.title)}

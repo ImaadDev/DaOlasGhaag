@@ -1,0 +1,20 @@
+# Da Olass Ghag Security Policy
+# For security researchers and responsible disclosure
+
+Contact: security@daolasghaag.com
+Contact: https://daolasghaag.com/contact
+Expires: 2026-12-31T23:59:59.000Z
+Preferred-Languages: en, ur
+Canonical: https://daolasghaag.com/.well-known/security.txt
+
+# Our PGP Key (if you have one)
+# PGP-Key: https://daolasghaag.com/.well-known/pgp-key.txt
+
+# Policy Details
+Policy: https://daolasghaag.com/security-policy
+
+# Acknowledgments
+Acknowledgments: https://daolasghaag.com/security-acknowledgments
+
+# Hiring
+Hiring: https://daolasghaag.com/careers

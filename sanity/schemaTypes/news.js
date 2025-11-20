@@ -145,6 +145,7 @@ export default {
       type: 'datetime',
       title: 'Published At',
       description: 'Date and time when the news is published',
+      initialValue: () => new Date().toISOString(),
     },
     {
       name: 'isBreaking',

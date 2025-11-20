@@ -59,6 +59,7 @@ export default {
       type: 'datetime',
       title: 'Published At',
       description: 'Date and time when the podcast was published',
+      initialValue: () => new Date().toISOString(),
     },
     {
       name: 'thumbnail',

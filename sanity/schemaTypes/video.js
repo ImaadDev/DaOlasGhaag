@@ -59,6 +59,7 @@ export default {
       type: 'datetime',
       title: 'Published At',
       description: 'Date and time when the video was published',
+      initialValue: () => new Date().toISOString(),
     },
     {
       name: 'thumbnail',
