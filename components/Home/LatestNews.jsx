@@ -5,6 +5,7 @@ import ScrollBasedAnimation from "../ScrollBasedAnimations";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import sanityClient from "@/lib/sanityClient";
+import Spinner from "@/components/Spinner";
 
 export default function LatestNews() {
   const pathname = usePathname();
@@ -38,9 +39,7 @@ export default function LatestNews() {
     return (
       <section className="max-w-7xl mx-auto px-8 py-16 md:py-24 border-t border-gray-100">
         <div className="flex justify-center items-center h-64">
-          <div className="text-gray-600">
-            {isUrdu ? "لوڈ ہو رہا ہے..." : "Loading..."}
-          </div>
+          <Spinner size="lg" />
         </div>
       </section>
     );

@@ -3,13 +3,13 @@
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
+// --- Animation Component (Preserved & Optimized) ---
 function ScrollBasedAnimation({ children, direction = "up", delay = 0 }) {
   const [isVisible, setIsVisible] = useState(false);
   const [ref, setRef] = useState(null);
 
   useEffect(() => {
     if (!ref) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -18,7 +18,6 @@ function ScrollBasedAnimation({ children, direction = "up", delay = 0 }) {
       },
       { threshold: 0.1 }
     );
-
     observer.observe(ref);
     return () => observer.disconnect();
   }, [ref, delay]);
@@ -26,19 +25,16 @@ function ScrollBasedAnimation({ children, direction = "up", delay = 0 }) {
   const getTransform = () => {
     if (isVisible) return "translate-y-0 translate-x-0 opacity-100";
     switch (direction) {
-      case "up": return "translate-y-12 opacity-0";
-      case "down": return "-translate-y-12 opacity-0";
-      case "left": return "translate-x-12 opacity-0";
-      case "right": return "-translate-x-12 opacity-0";
+      case "up": return "translate-y-8 opacity-0"; // Reduced distance for subtler effect
+      case "down": return "-translate-y-8 opacity-0";
+      case "left": return "translate-x-8 opacity-0";
+      case "right": return "-translate-x-8 opacity-0";
       default: return "opacity-0";
     }
   };
 
   return (
-    <div
-      ref={setRef}
-      className={`transition-all duration-1000 ease-out ${getTransform()}`}
-    >
+    <div ref={setRef} className={`transition-all duration-1000 ease-out ${getTransform()}`}>
       {children}
     </div>
   );
@@ -49,309 +45,234 @@ export default function About() {
   const isUrdu = pathname.startsWith("/ur");
 
   return (
-    <main className={`bg-white text-black mx-auto px-6 md:px-16 py-20 md:py-28 ${isUrdu ? "rtl" : "ltr"}`}>
-      {/* Hero Section */}
-      <ScrollBasedAnimation direction="up" delay={0.1}>
-        <section className="relative max-w-7xl mx-auto mb-40">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <div className="space-y-10">
-              <div className="flex items-center gap-6">
-                <div className="w-20 h-0.5 bg-red-600"></div>
-                <span className="text-xs font-bold uppercase tracking-[0.3em] text-red-600">
-                  {isUrdu ? "نیوز ایجنسی" : "News Agency"}
+    <main className={`bg-white text-black min-h-screen ${isUrdu ? "rtl font-urdu" : "ltr font-sans"}`}>
+      
+      {/* 1. MASTHEAD / HERO SECTION */}
+      <section className="relative border-b-4 border-black pt-20 md:pt-32 pb-16 px-6 md:px-12 max-w-[1400px] mx-auto">
+        <ScrollBasedAnimation direction="up" delay={0.1}>
+          <div className="flex flex-col md:flex-row gap-12 items-start">
+            {/* Headline Area */}
+            <div className="flex-1">
+              <div className="inline-block bg-[#B80000] text-white px-3 py-1 text-xs font-bold uppercase tracking-widest mb-6">
+                {isUrdu ? "ادارتی نوٹ" : "Editorial Note"}
+              </div>
+              <h1 className="text-6xl md:text-8xl font-extrabold uppercase leading-[0.9] tracking-tight mb-8">
+                {isUrdu ? "سچائی کی" : "Defining"} <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B80000] to-red-900">
+                  {isUrdu ? "تلاش" : "The Truth"}
                 </span>
-              </div>
-              <h1 className="text-6xl md:text-8xl font-black uppercase tracking-[-0.03em] leading-[0.9]">
-                {isUrdu ? "ہمارے بارے میں" : "About"}
-                <br />
-                <span className="text-red-600 inline-block mt-2">{isUrdu ? "جانیں" : "Us"}</span>
               </h1>
-              <div className="space-y-6">
-                <div className="w-16 h-0.5 bg-black"></div>
-                <p className="text-xl text-gray-700 max-w-lg leading-relaxed">
-                  {isUrdu
-                    ? "ہم ایک آزاد اور معتبر نیوز ایجنسی ہیں جو دنیا بھر سے تازہ ترین خبریں اور گہری تجزیہ فراہم کرتی ہے۔"
-                    : "We are an independent and trusted news agency providing the latest news and in-depth analysis from around the world."
-                  }
-                </p>
-              </div>
             </div>
-            <div className="relative lg:h-[500px] flex items-center justify-center">
-              <div className="absolute top-0 right-0 w-32 h-32 border-t-4 border-r-4 border-black"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-red-600 opacity-10"></div>
-              <div className="relative w-full max-w-md">
-                <div className="space-y-8 p-10">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-0.5 bg-black"></div>
-                    <div className="flex-1 h-0.5 bg-gray-200"></div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-20 h-0.5 bg-red-600"></div>
-                    <div className="flex-1 h-0.5 bg-gray-200"></div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-32 h-0.5 bg-black"></div>
-                    <div className="flex-1 h-0.5 bg-gray-200"></div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-16 h-0.5 bg-red-600"></div>
-                    <div className="flex-1 h-0.5 bg-gray-200"></div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-24 h-0.5 bg-black"></div>
-                    <div className="flex-1 h-0.5 bg-gray-200"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </ScrollBasedAnimation>
 
-      {/* Stats Section */}
-      <ScrollBasedAnimation direction="up" delay={0.2}>
-        <section className="max-w-7xl mx-auto mb-40">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 border border-black">
-            <div className="border-r border-b lg:border-b-0 border-black p-10 text-center hover:bg-black hover:text-white transition-all duration-500">
-              <div className="text-5xl md:text-7xl font-black mb-3">2020</div>
-              <div className="text-xs uppercase tracking-[0.25em] opacity-70">
-                {isUrdu ? "شروع" : "Founded"}
-              </div>
-            </div>
-            <div className="border-b lg:border-b-0 lg:border-r border-black p-10 text-center hover:bg-red-600 hover:text-white transition-all duration-500">
-              <div className="text-5xl md:text-7xl font-black mb-3">50+</div>
-              <div className="text-xs uppercase tracking-[0.25em] opacity-70">
-                {isUrdu ? "صحافی" : "Journalists"}
-              </div>
-            </div>
-            <div className="border-r border-black p-10 text-center hover:bg-black hover:text-white transition-all duration-500">
-              <div className="text-5xl md:text-7xl font-black mb-3">10M+</div>
-              <div className="text-xs uppercase tracking-[0.25em] opacity-70">
-                {isUrdu ? "قاری" : "Readers"}
-              </div>
-            </div>
-            <div className="p-10 text-center hover:bg-red-600 hover:text-white transition-all duration-500">
-              <div className="text-5xl md:text-7xl font-black mb-3">24/7</div>
-              <div className="text-xs uppercase tracking-[0.25em] opacity-70">
-                {isUrdu ? "کوریج" : "Coverage"}
-              </div>
-            </div>
-          </div>
-        </section>
-      </ScrollBasedAnimation>
-
-      {/* Story Section */}
-      <ScrollBasedAnimation direction="left" delay={0.3}>
-        <section className="max-w-7xl mx-auto mb-40">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 items-start">
-            <div className="lg:col-span-2">
-              <div className="sticky top-24">
-                <div className="w-12 h-0.5 bg-red-600 mb-8"></div>
-                <h2 className="text-5xl md:text-6xl font-black uppercase leading-none mb-8">
-                  {isUrdu ? "ہماری" : "Our"}
-                  <br />
-                  <span className="text-red-600">{isUrdu ? "کہانی" : "Story"}</span>
-                </h2>
-              </div>
-            </div>
-            <div className="lg:col-span-3 space-y-12">
-              <div className="border-l-2 border-black pl-8 py-4">
-                <div className="text-xs uppercase tracking-[0.25em] text-red-600 mb-4 font-bold">
-                  {isUrdu ? "شروعات" : "The Beginning"}
-                </div>
-                <p className="text-gray-700 text-lg leading-relaxed">
-                  {isUrdu
-                    ? "ہماری کہانی 2020 میں شروع ہوئی جب ایک گروپ صحافیوں نے محسوس کیا کہ دنیا کو ایک ایسی نیوز ایجنسی کی ضرورت ہے جو سچائی کو فروغ دے اور غیر جانبدار رپورٹنگ کرے۔"
-                    : "Our story began in 2020 when a group of journalists realized that the world needed a news agency that promotes truth and provides impartial reporting."
-                  }
-                </p>
-              </div>
-              <div className="border-l-2 border-red-600 pl-8 py-4">
-                <div className="text-xs uppercase tracking-[0.25em] text-red-600 mb-4 font-bold">
-                  {isUrdu ? "ترقی" : "Growth"}
-                </div>
-                <p className="text-gray-700 text-lg leading-relaxed">
-                  {isUrdu
-                    ? "ہم نے مسلسل بہتری اور توسیع کا سفر جاری رکھا، نئے صحافیوں کو شامل کیا اور اپنی رسائی کو بڑھایا۔"
-                    : "We continued our journey of continuous improvement and expansion, bringing in new journalists and extending our reach."
-                  }
-                </p>
-              </div>
-              <div className="border-l-2 border-black pl-8 py-4">
-                <div className="text-xs uppercase tracking-[0.25em] text-red-600 mb-4 font-bold">
-                  {isUrdu ? "موجودہ" : "Present"}
-                </div>
-                <p className="text-gray-700 text-lg leading-relaxed">
-                  {isUrdu
-                    ? "آج ہم دنیا کے مختلف حصوں میں کام کرتے ہیں اور ہر روز لاکھوں لوگوں تک پہنچتے ہیں، انہیں درست اور بروقت معلومات فراہم کرتے ہیں۔"
-                    : "Today we work across different parts of the world and reach millions of people every day, providing them with accurate and timely information."
-                  }
+            {/* Manifesto Area */}
+            <div className="flex-1 md:pt-12 md:border-l md:border-gray-200 md:pl-12">
+              <p className="text-xl md:text-2xl font-serif text-gray-800 leading-relaxed">
+                {isUrdu
+                  ? "ہم ایک آزاد اور معتبر نیوز ایجنسی ہیں جو دنیا بھر سے تازہ ترین خبریں اور گہری تجزیہ فراہم کرتی ہے۔ ہمارا مقصد صرف خبر دینا نہیں، بلکہ شعور بیدار کرنا ہے۔"
+                  : "We are an independent news agency dedicated to unearthing the facts. In an era of noise, we provide the signal—delivering depth, analysis, and unwavering accuracy."
+                }
+              </p>
+              <div className="mt-8 flex items-center gap-4">
+                <div className="h-[1px] w-12 bg-black"></div>
+                <p className="text-sm font-bold uppercase tracking-widest">
+                  {isUrdu ? "چف ایڈیٹر" : "Editor in Chief"}
                 </p>
               </div>
             </div>
           </div>
-        </section>
-      </ScrollBasedAnimation>
+        </ScrollBasedAnimation>
+      </section>
 
-      {/* Mission & Vision */}
-      <ScrollBasedAnimation direction="up" delay={0.4}>
-        <section className="max-w-7xl mx-auto mb-40">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-black">
-            <div className="p-12 lg:p-16 border-b lg:border-b-0 lg:border-r border-black">
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-8 h-8 bg-black"></div>
-                  <h3 className="text-3xl font-black uppercase tracking-tight">
-                    {isUrdu ? "مشن" : "Mission"}
-                  </h3>
+      {/* 2. DATA STRIP (Stats) */}
+      <div className="border-b border-gray-200 bg-gray-50">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          <ScrollBasedAnimation direction="up" delay={0.2}>
+            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-300 border-x border-gray-300">
+              {[
+                { label: isUrdu ? "قیام" : "Est.", value: "2020" },
+                { label: isUrdu ? "صحافی" : "Journalists", value: "50+" },
+                { label: isUrdu ? "روزانہ قاری" : "Daily Readers", value: "10M+" },
+                { label: isUrdu ? "ممالک" : "Countries", value: "12" },
+              ].map((stat, index) => (
+                <div key={index} className="p-6 md:p-10 text-center hover:bg-white transition-colors duration-300">
+                  <div className="text-3xl md:text-5xl font-black text-[#B80000] mb-2">{stat.value}</div>
+                  <div className="text-xs font-bold uppercase tracking-widest text-gray-500">{stat.label}</div>
                 </div>
-                <div className="w-20 h-0.5 bg-red-600"></div>
-                <p className="text-gray-700 text-lg leading-relaxed">
-                  {isUrdu
-                    ? "ہماری مشن صحت مند جمہوریت، انسانی حقوق اور شفافیت کو فروغ دینا ہے۔ ہم دنیا بھر سے خبریں جمع کرتے ہیں اور انہیں درست اور غیر جانبدار طریقے سے پیش کرتے ہیں۔"
-                    : "Our mission is to promote healthy democracy, human rights, and transparency. We gather news from around the world and present it accurately and impartially."
-                  }
-                </p>
-              </div>
+              ))}
             </div>
-            <div className="p-12 lg:p-16 bg-red-50">
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-8 h-8 bg-red-600"></div>
-                  <h3 className="text-3xl font-black uppercase tracking-tight">
-                    {isUrdu ? "ویژن" : "Vision"}
-                  </h3>
-                </div>
-                <div className="w-20 h-0.5 bg-black"></div>
-                <p className="text-gray-700 text-lg leading-relaxed">
-                  {isUrdu
-                    ? "ہماری ویژن ایک ایسی دنیا ہے جہاں ہر شخص درست معلومات تک رسائی رکھتا ہے اور آزاد صحافت کا احترام کیا جاتا ہے۔"
-                    : "Our vision is a world where everyone has access to accurate information and freedom of the press is respected."
-                  }
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-      </ScrollBasedAnimation>
+          </ScrollBasedAnimation>
+        </div>
+      </div>
 
-      {/* Values Section */}
-      <ScrollBasedAnimation direction="up" delay={0.5}>
-        <section className="max-w-7xl mx-auto mb-40">
-          <div className="text-center mb-20">
-            <div className="w-16 h-0.5 bg-red-600 mx-auto mb-8"></div>
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tight">
-              {isUrdu ? "ہماری اقدار" : "Our Values"}
+      {/* 3. TIMELINE CHRONICLE */}
+      <section className="py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
+        <ScrollBasedAnimation direction="up" delay={0.3}>
+          <div className="flex items-center gap-3 mb-16">
+            <div className="w-4 h-4 bg-[#B80000]"></div>
+            <h2 className="text-2xl font-bold uppercase tracking-wider">
+              {isUrdu ? "ہمارا سفر" : "Our Chronicle"}
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-black">
-            <div className="group p-10 border-b md:border-r md:border-b-0 border-black hover:bg-black transition-all duration-500">
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-black uppercase text-xl tracking-tight group-hover:text-white transition-colors">
-                    {isUrdu ? "سچائی اور درستگی" : "Truth & Accuracy"}
-                  </h4>
-                  <div className="w-6 h-6 border-2 border-black group-hover:border-white transition-colors"></div>
-                </div>
-                <p className="text-gray-700 group-hover:text-gray-300 leading-relaxed transition-colors">
+          <div className="space-y-0">
+            {/* Year 1 */}
+            <div className="group grid grid-cols-1 md:grid-cols-12 border-t border-black py-12 hover:bg-gray-50 transition-colors duration-500">
+              <div className="md:col-span-4">
+                <span className="text-6xl md:text-8xl font-black text-gray-200 group-hover:text-black transition-colors duration-500">
+                  2020
+                </span>
+              </div>
+              <div className="md:col-span-8 pt-4 md:pt-6">
+                <h3 className="text-xl font-bold uppercase mb-4 text-[#B80000]">
+                  {isUrdu ? "شروعات" : "The Inception"}
+                </h3>
+                <p className="text-lg font-serif text-gray-700 max-w-2xl leading-relaxed">
                   {isUrdu
-                    ? "ہم ہمیشہ سچائی اور درستگی کو ترجیح دیتے ہیں اور ہماری رپورٹنگ میں کوئی سمجھوتہ نہیں کرتے۔"
-                    : "We always prioritize truth and accuracy and make no compromises in our reporting."
-                  }
+                    ? "صحافیوں کے ایک چھوٹے گروپ نے محسوس کیا کہ دنیا کو غیر جانبدار رپورٹنگ کی اشد ضرورت ہے۔ ہم نے بغیر کسی فنڈنگ کے شروعات کی۔"
+                    : "A collective of independent journalists recognized a void in impartial reporting. We launched with zero corporate backing, driven solely by the pursuit of truth."}
                 </p>
               </div>
             </div>
 
-            <div className="group p-10 border-b border-black hover:bg-red-600 transition-all duration-500">
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-black uppercase text-xl tracking-tight group-hover:text-white transition-colors">
-                    {isUrdu ? "غیر جانبداری" : "Impartiality"}
-                  </h4>
-                  <div className="w-6 h-6 border-2 border-black group-hover:border-white transition-colors"></div>
-                </div>
-                <p className="text-gray-700 group-hover:text-white leading-relaxed transition-colors">
+            {/* Year 2 */}
+            <div className="group grid grid-cols-1 md:grid-cols-12 border-t border-gray-300 py-12 hover:bg-gray-50 transition-colors duration-500">
+              <div className="md:col-span-4">
+                <span className="text-6xl md:text-8xl font-black text-gray-200 group-hover:text-black transition-colors duration-500">
+                  2022
+                </span>
+              </div>
+              <div className="md:col-span-8 pt-4 md:pt-6">
+                <h3 className="text-xl font-bold uppercase mb-4 text-[#B80000]">
+                  {isUrdu ? "عالمی توسیع" : "Global Expansion"}
+                </h3>
+                <p className="text-lg font-serif text-gray-700 max-w-2xl leading-relaxed">
                   {isUrdu
-                    ? "ہم تمام فریقوں کی نمائندگی کرتے ہیں اور ہماری رپورٹنگ میں کوئی تعصب نہیں ہوتا۔"
-                    : "We represent all parties and there is no bias in our reporting."
-                  }
+                    ? "ڈیجیٹل جدت کو اپناتے ہوئے، ہم نے 5 نئے ممالک میں بیورو کھولے اور اپنی ٹیم کو تین گنا بڑھایا۔"
+                    : "Leveraging digital innovation, we opened bureaus in 5 new territories and tripled our investigative team, breaking several major international stories."}
                 </p>
               </div>
             </div>
 
-            <div className="group p-10 border-b md:border-b-0 md:border-r border-black hover:bg-red-600 transition-all duration-500">
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-black uppercase text-xl tracking-tight group-hover:text-white transition-colors">
-                    {isUrdu ? "شفافیت" : "Transparency"}
-                  </h4>
-                  <div className="w-6 h-6 border-2 border-black group-hover:border-white transition-colors"></div>
-                </div>
-                <p className="text-gray-700 group-hover:text-white leading-relaxed transition-colors">
-                  {isUrdu
-                    ? "ہم اپنے کام میں شفافیت کو یقینی بناتے ہیں اور اپنے سامعین کے ساتھ ایمانداری سے کام کرتے ہیں۔"
-                    : "We ensure transparency in our work and deal honestly with our audience."
-                  }
-                </p>
+            {/* Year 3 */}
+            <div className="group grid grid-cols-1 md:grid-cols-12 border-t border-gray-300 border-b py-12 hover:bg-gray-50 transition-colors duration-500">
+              <div className="md:col-span-4">
+                <span className="text-6xl md:text-8xl font-black text-gray-200 group-hover:text-black transition-colors duration-500">
+                  2024
+                </span>
               </div>
-            </div>
-
-            <div className="group p-10 hover:bg-black transition-all duration-500">
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-black uppercase text-xl tracking-tight group-hover:text-white transition-colors">
-                    {isUrdu ? "جدت" : "Innovation"}
-                  </h4>
-                  <div className="w-6 h-6 border-2 border-black group-hover:border-white transition-colors"></div>
-                </div>
-                <p className="text-gray-700 group-hover:text-gray-300 leading-relaxed transition-colors">
+              <div className="md:col-span-8 pt-4 md:pt-6">
+                <h3 className="text-xl font-bold uppercase mb-4 text-[#B80000]">
+                  {isUrdu ? "آج کا دن" : "The Present"}
+                </h3>
+                <p className="text-lg font-serif text-gray-700 max-w-2xl leading-relaxed">
                   {isUrdu
-                    ? "ہم جدید ٹیکنالوجی اور طریقوں کا استعمال کرتے ہیں تاکہ بہترین تجربہ فراہم کریں۔"
-                    : "We use modern technology and methods to provide the best experience."
-                  }
+                    ? "آج ہم لاکھوں لوگوں کی آواز ہیں۔ ہم ٹیکنالوجی اور روایتی صحافت کا بہترین امتزاج پیش کرتے ہیں۔"
+                    : "Today, we stand as a pillar of reliability. We combine AI-driven data analysis with boots-on-the-ground journalism to cover the stories that matter."}
                 </p>
               </div>
             </div>
           </div>
+        </ScrollBasedAnimation>
+      </section>
+
+      {/* 4. MISSION & VISION (High Contrast) */}
+      <ScrollBasedAnimation direction="up" delay={0.4}>
+        <section className="grid grid-cols-1 lg:grid-cols-2">
+          <div className="bg-black text-white p-16 md:p-24 flex flex-col justify-center">
+            <div className="w-16 h-1 bg-[#B80000] mb-8"></div>
+            <h3 className="text-4xl font-black uppercase tracking-tight mb-6">
+              {isUrdu ? "ہمارا مشن" : "Our Mission"}
+            </h3>
+            <p className="text-xl md:text-2xl font-serif leading-relaxed text-gray-300">
+              {isUrdu
+                ? "جمہوریت، انسانی حقوق اور شفافیت کا فروغ۔ ہم طاقتوروں سے جواب طلب کرتے ہیں اور کمزوروں کو آواز دیتے ہیں۔"
+                : "To hold power accountable. To champion transparency. To provide a clear, unbiased window into the events shaping our world without fear or favor."
+              }
+            </p>
+          </div>
+          <div className="bg-[#F4F4F4] text-black p-16 md:p-24 flex flex-col justify-center">
+            <div className="w-16 h-1 bg-black mb-8"></div>
+            <h3 className="text-4xl font-black uppercase tracking-tight mb-6">
+              {isUrdu ? "ہمارا وژن" : "Our Vision"}
+            </h3>
+            <p className="text-xl md:text-2xl font-serif leading-relaxed text-gray-800">
+              {isUrdu
+                ? "ایک ایسی دنیا جہاں ہر شہری کو درست معلومات تک رسائی حاصل ہو اور صحافت کسی دباؤ کے بغیر کام کر سکے۔"
+                : "A world where information is a right, not a privilege. We envision a future where informed citizens drive positive global change through access to truth."
+              }
+            </p>
+          </div>
         </section>
       </ScrollBasedAnimation>
 
-      {/* Call to Action */}
+      {/* 5. CORE VALUES (Grid) */}
+      <section className="py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
+        <ScrollBasedAnimation direction="up" delay={0.5}>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight inline-block border-b-4 border-[#B80000] pb-2">
+              {isUrdu ? "بنیادی اقدار" : "Core Values"}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-gray-200 border border-gray-200">
+            {[
+              { 
+                title: isUrdu ? "سچائی" : "Integrity", 
+                desc: isUrdu ? "ہم حقائق سے سمجھوتہ نہیں کرتے۔" : "Uncompromising adherence to moral and ethical principles." 
+              },
+              { 
+                title: isUrdu ? "غیر جانبداری" : "Impartiality", 
+                desc: isUrdu ? "ہم کسی ایک طرف کا ساتھ نہیں دیتے۔" : "Fair representation of all perspectives without bias." 
+              },
+              { 
+                title: isUrdu ? "بہادری" : "Courage", 
+                desc: isUrdu ? "مشکل حالات میں بھی سچ بولنا۔" : "The bravery to report difficult stories in dangerous places." 
+              }
+            ].map((item, idx) => (
+              <div key={idx} className="bg-white p-12 hover:bg-black hover:text-white transition-all duration-300 group">
+                <h4 className="text-xl font-bold uppercase tracking-wider mb-4 group-hover:text-[#B80000] transition-colors">
+                  {item.title}
+                </h4>
+                <p className="font-serif text-lg text-gray-600 group-hover:text-gray-300">
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </ScrollBasedAnimation>
+      </section>
+
+      {/* 6. CALL TO ACTION (Minimalist) */}
       <ScrollBasedAnimation direction="up" delay={0.6}>
-        <section className="max-w-5xl mx-auto">
-          <div className="border-2 border-black p-12 md:p-20 text-center relative">
-            <div className="absolute top-0 left-0 w-20 h-20 border-t-4 border-l-4 border-red-600"></div>
-            <div className="absolute bottom-0 right-0 w-20 h-20 border-b-4 border-r-4 border-red-600"></div>
-            <div className="space-y-8">
-              <div className="w-16 h-0.5 bg-black mx-auto"></div>
-              <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tight">
-                {isUrdu ? "ہم سے جڑیں" : "Connect With Us"}
-              </h3>
-              <p className="text-gray-700 text-xl max-w-2xl mx-auto leading-relaxed">
-                {isUrdu
-                  ? "اگر آپ ہماری کہانی سے متاثر ہوئے ہیں تو ہم سے رابطہ کریں اور ہمارے ساتھ شامل ہوں۔"
-                  : "If you've been inspired by our story, contact us and join us."
-                }
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                <a
-                  href={isUrdu ? "/ur/contact" : "/en/contact"}
-                  className="border-2 border-black px-10 py-5 font-bold text-sm uppercase tracking-[0.2em] hover:bg-black hover:text-white transition-all duration-300"
-                >
-                  {isUrdu ? "رابطہ کریں" : "Contact"}
-                </a>
-                <a
-                  href={isUrdu ? "/ur/newsletter" : "/en/newsletter"}
-                  className="bg-red-600 text-white px-10 py-5 font-bold text-sm uppercase tracking-[0.2em] hover:bg-black transition-all duration-300"
-                >
-                  {isUrdu ? "نیوز لیٹر" : "Newsletter"}
-                </a>
-              </div>
+        <section className="bg-[#B80000] text-white py-20 text-center px-6">
+          <div className="max-w-3xl mx-auto space-y-8">
+            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tight">
+              {isUrdu ? "باخبر رہیں۔" : "Stay Informed."}
+            </h2>
+            <p className="text-xl font-serif opacity-90 max-w-2xl mx-auto">
+              {isUrdu
+                ? "روزانہ کی اہم خبریں سیدھا اپنے ان باکس میں حاصل کریں۔ کوئی شور نہیں، صرف خبریں۔"
+                : "Get the most critical stories delivered straight to your inbox. No noise, just news."
+              }
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+              <a
+                href={isUrdu ? "/ur/newsletter" : "/en/newsletter"}
+                className="bg-white text-black px-10 py-4 font-bold text-sm uppercase tracking-widest hover:bg-black hover:text-white transition-colors duration-300"
+              >
+                {isUrdu ? "سبسکرائب کریں" : "Subscribe Free"}
+              </a>
+              <a
+                href={isUrdu ? "/ur/contact" : "/en/contact"}
+                className="border-2 border-white text-white px-10 py-4 font-bold text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-colors duration-300"
+              >
+                {isUrdu ? "رابطہ کریں" : "Contact Us"}
+              </a>
             </div>
           </div>
         </section>
       </ScrollBasedAnimation>
+
     </main>
   );
 }

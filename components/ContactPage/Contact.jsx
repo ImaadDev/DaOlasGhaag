@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import ScrollBasedAnimation from "../ScrollBasedAnimations";
 import { useState } from "react";
+import { Mail, Phone, MapPin, Clock, Send, Facebook, Twitter, Instagram, Youtube } from "lucide-react";
 
 export default function Contact() {
   const pathname = usePathname();
@@ -23,212 +24,228 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
     console.log("Form submitted:", formData);
     alert(isUrdu ? "پیغام بھیج دیا گیا!" : "Message sent!");
   };
 
   return (
-    <main className={`bg-white text-black mx-auto px-6 md:px-16 py-20 md:py-28 ${isUrdu ? "rtl" : "ltr"}`}>
-      {/* Header */}
+    <main className={`bg-white text-black min-h-screen ${isUrdu ? "rtl font-urdu" : "ltr font-sans"}`}>
+      
+      {/* 1. Hero / Header Section */}
       <ScrollBasedAnimation direction="up" delay={0.1}>
-        <header className="max-w-5xl mx-auto text-center mb-16">
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <div className="w-1 h-10 bg-black" />
-            <h1 className="text-4xl md:text-6xl font-extrabold uppercase tracking-tight">
-              {isUrdu ? "ہم سے رابطہ کریں" : "Contact Us"}
-            </h1>
+        <header className="relative border-b border-gray-200">
+          {/* Top Red Strip */}
+          <div className="w-full h-2 bg-[#B80000]"></div>
+          
+          <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+            <div className="max-w-4xl">
+              <div className="inline-block bg-[#B80000] text-white px-4 py-1 text-xs font-bold uppercase tracking-widest mb-6">
+                {isUrdu ? "رابطہ" : "Get in Touch"}
+              </div>
+              <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9] mb-8">
+                {isUrdu ? "ہم سے" : "Contact"} <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B80000] to-red-700">
+                  {isUrdu ? "رابطہ کریں" : "Our Newsroom"}
+                </span>
+              </h1>
+              <p className="text-xl text-gray-600 font-serif max-w-2xl leading-relaxed border-l-4 border-gray-300 pl-6">
+                {isUrdu
+                  ? "ہم آپ کی رائے اور سوالات کا استقبال کرتے ہیں۔ ہماری ٹیم 24/7 دستیاب ہے۔"
+                  : "We value your feedback. Whether it's a breaking tip, a correction, or a general inquiry, our team is ready to listen."
+                }
+              </p>
+            </div>
           </div>
-          <p className="text-gray-700 text-lg md:text-xl max-w-3xl mx-auto">
-            {isUrdu
-              ? "ہم آپ کی رائے اور سوالات کا استقبال کرتے ہیں۔ براہ کرم ہم سے رابطہ کریں۔"
-              : "We welcome your feedback and questions. Please get in touch with us."
-            }
-          </p>
         </header>
       </ScrollBasedAnimation>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
-        {/* Contact Form */}
-        <ScrollBasedAnimation direction="left" delay={0.2}>
-          <section>
-            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight mb-8 border-b border-black pb-3">
-              {isUrdu ? "پیغام بھیجیں" : "Send Message"}
-            </h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    {isUrdu ? "نام" : "Name"} *
+      {/* 2. Main Content Grid */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+          
+          {/* Left Column: Contact Form (Span 7) */}
+          <div className="lg:col-span-7">
+            <ScrollBasedAnimation direction="up" delay={0.2}>
+              <div className="mb-10 border-b-2 border-[#B80000] pb-3 inline-block w-full">
+                <h2 className="text-2xl font-bold uppercase tracking-widest flex items-center gap-3">
+                  <Send className="w-6 h-6 text-[#B80000]" />
+                  {isUrdu ? "پیغام بھیجیں" : "Send a Message"}
+                </h2>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="group">
+                    <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-[#B80000] transition-colors">
+                      {isUrdu ? "نام" : "Name"} <span className="text-[#B80000]">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-gray-50 px-4 py-4 border-b-2 border-gray-300 focus:border-[#B80000] outline-none transition-colors font-medium rounded-none"
+                      placeholder={isUrdu ? "آپ کا نام" : "Full Name"}
+                    />
+                  </div>
+                  <div className="group">
+                    <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-[#B80000] transition-colors">
+                      {isUrdu ? "ای میل" : "Email"} <span className="text-[#B80000]">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-gray-50 px-4 py-4 border-b-2 border-gray-300 focus:border-[#B80000] outline-none transition-colors font-medium rounded-none"
+                      placeholder={isUrdu ? "آپ کا ای میل" : "Email Address"}
+                    />
+                  </div>
+                </div>
+
+                <div className="group">
+                  <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-[#B80000] transition-colors">
+                    {isUrdu ? "موضوع" : "Subject"} <span className="text-[#B80000]">*</span>
                   </label>
                   <input
                     type="text"
-                    name="name"
-                    value={formData.name}
+                    name="subject"
+                    value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border-2 border-gray-300 focus:border-black focus:outline-none transition-colors"
-                    placeholder={isUrdu ? "آپ کا نام" : "Your name"}
+                    className="w-full bg-gray-50 px-4 py-4 border-b-2 border-gray-300 focus:border-[#B80000] outline-none transition-colors font-medium rounded-none"
+                    placeholder={isUrdu ? "موضوع" : "Subject Matter"}
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    {isUrdu ? "ای میل" : "Email"} *
+
+                <div className="group">
+                  <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-[#B80000] transition-colors">
+                    {isUrdu ? "پیغام" : "Message"} <span className="text-[#B80000]">*</span>
                   </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
+                  <textarea
+                    name="message"
+                    value={formData.message}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border-2 border-gray-300 focus:border-black focus:outline-none transition-colors"
-                    placeholder={isUrdu ? "آپ کا ای میل" : "Your email"}
+                    rows={6}
+                    className="w-full bg-gray-50 px-4 py-4 border-b-2 border-gray-300 focus:border-[#B80000] outline-none transition-colors font-medium resize-none rounded-none"
+                    placeholder={isUrdu ? "تفصیلات..." : "Type your message here..."}
                   />
                 </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  {isUrdu ? "موضوع" : "Subject"} *
-                </label>
-                <input
-                  type="text"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border-2 border-gray-300 focus:border-black focus:outline-none transition-colors"
-                  placeholder={isUrdu ? "پیغام کا موضوع" : "Message subject"}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  {isUrdu ? "پیغام" : "Message"} *
-                </label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={6}
-                  className="w-full px-4 py-3 border-2 border-gray-300 focus:border-black focus:outline-none transition-colors resize-none"
-                  placeholder={isUrdu ? "آپ کا پیغام یہاں لکھیں..." : "Write your message here..."}
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full md:w-auto px-8 py-3 bg-black text-white font-bold text-sm tracking-widest hover:bg-gray-800 transition-colors"
-              >
-                {isUrdu ? "بھیجیں" : "Send Message"}
-              </button>
-            </form>
-          </section>
-        </ScrollBasedAnimation>
 
-        {/* Contact Information */}
-        <ScrollBasedAnimation direction="right" delay={0.3}>
-          <section className="space-y-8">
-            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight mb-8 border-b border-black pb-3">
-              {isUrdu ? "رابطہ کی معلومات" : "Contact Information"}
-            </h2>
+                <button
+                  type="submit"
+                  className="group relative overflow-hidden bg-[#B80000] text-white px-10 py-4 font-bold text-sm uppercase tracking-[0.2em] transition-all hover:bg-black rounded-none"
+                >
+                  <span className="relative z-10">{isUrdu ? "بھیجیں" : "Submit Inquiry"}</span>
+                </button>
+              </form>
+            </ScrollBasedAnimation>
+          </div>
 
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-black text-white flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                  </svg>
+          {/* Right Column: Info & Details (Span 5) */}
+          <div className="lg:col-span-5">
+            <ScrollBasedAnimation direction="up" delay={0.3}>
+              <div className="bg-gray-50 p-8 md:p-12 border border-gray-200 h-full">
+                <div className="mb-10 border-b-2 border-[#B80000] pb-3">
+                  <h2 className="text-xl font-bold uppercase tracking-widest">
+                    {isUrdu ? "رابطہ کی تفصیلات" : "Corporate Info"}
+                  </h2>
                 </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-1">
-                    {isUrdu ? "ای میل" : "Email"}
+
+                <div className="space-y-10">
+                  {/* Email */}
+                  <div className="flex items-start gap-6 group">
+                    <div className="w-12 h-12 bg-white border border-gray-200 flex items-center justify-center text-[#B80000] group-hover:bg-[#B80000] group-hover:text-white transition-colors shadow-sm">
+                      <Mail className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-sm uppercase tracking-wide text-gray-500 mb-1">
+                        {isUrdu ? "ای میل" : "Email Inquiries"}
+                      </h3>
+                      <a href="mailto:info@daolassghag.com" className="text-lg font-bold text-black hover:text-[#B80000] transition-colors border-b border-gray-300 hover:border-[#B80000]">
+                        info@daolassghag.com
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Phone */}
+                  <div className="flex items-start gap-6 group">
+                    <div className="w-12 h-12 bg-white border border-gray-200 flex items-center justify-center text-[#B80000] group-hover:bg-[#B80000] group-hover:text-white transition-colors shadow-sm">
+                      <Phone className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-sm uppercase tracking-wide text-gray-500 mb-1">
+                        {isUrdu ? "فون" : "Direct Line"}
+                      </h3>
+                      <a href="tel:+1234567890" className="text-lg font-serif text-black hover:text-[#B80000] transition-colors">
+                        +1 (234) 567-890
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Address */}
+                  <div className="flex items-start gap-6 group">
+                    <div className="w-12 h-12 bg-white border border-gray-200 flex items-center justify-center text-[#B80000] group-hover:bg-[#B80000] group-hover:text-white transition-colors shadow-sm">
+                      <MapPin className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-sm uppercase tracking-wide text-gray-500 mb-1">
+                        {isUrdu ? "ہیڈ آفس" : "Headquarters"}
+                      </h3>
+                      <p className="text-lg text-gray-800 font-serif leading-snug">
+                        {isUrdu
+                          ? "123 نیوز اسٹریٹ، اسلام آباد، پاکستان"
+                          : "123 Media Center, Blue Area, Islamabad, Pakistan"
+                        }
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Hours */}
+                  <div className="flex items-start gap-6 group">
+                    <div className="w-12 h-12 bg-white border border-gray-200 flex items-center justify-center text-[#B80000] group-hover:bg-[#B80000] group-hover:text-white transition-colors shadow-sm">
+                      <Clock className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-sm uppercase tracking-wide text-gray-500 mb-1">
+                        {isUrdu ? "اوقات کار" : "Operating Hours"}
+                      </h3>
+                      <p className="text-base text-gray-800">
+                        {isUrdu ? "پیر - جمعہ: 9:00 - 18:00" : "Mon - Fri: 09:00 - 18:00"}
+                      </p>
+                      <p className="text-sm text-[#B80000] font-bold mt-1 uppercase tracking-wider">
+                        {isUrdu ? "ہفتہ - اتوار: بند" : "Weekend: Closed"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Social Follow */}
+                <div className="mt-12 pt-8 border-t border-gray-200">
+                  <h3 className="font-bold text-sm uppercase tracking-widest mb-6">
+                    {isUrdu ? "ہمیں فالو کریں" : "Follow Our Feed"}
                   </h3>
-                  <p className="text-gray-600">
-                    <a href="mailto:info@daolassghag.com" className="hover:text-black transition-colors">
-                      info@daolassghag.com
-                    </a>
-                  </p>
+                  <div className="flex gap-4">
+                    {[Facebook, Twitter, Instagram, Youtube].map((Icon, idx) => (
+                      <a 
+                        key={idx} 
+                        href="#" 
+                        className="w-10 h-10 border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-[#B80000] hover:text-white hover:border-[#B80000] transition-all duration-300"
+                      >
+                        <Icon className="w-4 h-4" />
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-black text-white flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-1">
-                    {isUrdu ? "فون" : "Phone"}
-                  </h3>
-                  <p className="text-gray-600">
-                    <a href="tel:+1234567890" className="hover:text-black transition-colors">
-                      +1 (234) 567-890
-                    </a>
-                  </p>
-                </div>
               </div>
+            </ScrollBasedAnimation>
+          </div>
 
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-black text-white flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-1">
-                    {isUrdu ? "پتہ" : "Address"}
-                  </h3>
-                  <p className="text-gray-600">
-                    {isUrdu
-                      ? "123 نیوز اسٹریٹ، اسلام آباد، پاکستان"
-                      : "123 News Street, Islamabad, Pakistan"
-                    }
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-black text-white flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-1">
-                    {isUrdu ? "آفس کے اوقات" : "Office Hours"}
-                  </h3>
-                  <p className="text-gray-600">
-                    {isUrdu ? "پیر سے جمعہ: 9:00 AM - 6:00 PM" : "Mon - Fri: 9:00 AM - 6:00 PM"}
-                  </p>
-                  <p className="text-gray-600">
-                    {isUrdu ? "ہفتہ اور اتوار: بند" : "Sat - Sun: Closed"}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Social Media */}
-            <div className="pt-8 border-t border-gray-300">
-              <h3 className="font-bold text-lg mb-4">
-                {isUrdu ? "ہمارے ساتھ جڑیں" : "Follow Us"}
-              </h3>
-              <div className="flex gap-4">
-                <a href="#" className="w-10 h-10 bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors">
-                  <span className="text-sm font-bold">F</span>
-                </a>
-                <a href="#" className="w-10 h-10 bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors">
-                  <span className="text-sm font-bold">T</span>
-                </a>
-                <a href="#" className="w-10 h-10 bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors">
-                  <span className="text-sm font-bold">I</span>
-                </a>
-                <a href="#" className="w-10 h-10 bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors">
-                  <span className="text-sm font-bold">Y</span>
-                </a>
-              </div>
-            </div>
-          </section>
-        </ScrollBasedAnimation>
+        </div>
       </div>
     </main>
   );

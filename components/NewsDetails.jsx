@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname, useParams } from "next/navigation";
 import sanityClient from "@/lib/sanityClient"; // Make sure your Sanity client is correctly set up
 import Link from "next/link";
+import Spinner from "@/components/Spinner";
 
 export default function NewsDetails() {
   const params = useParams(); // { slug: "news-slug" }
@@ -27,7 +28,7 @@ export default function NewsDetails() {
   }, [params.slug]);
 
   if (loading) {
-    return <div className="text-center py-20">{isUrdu ? "لوڈ ہو رہا ہے..." : "Loading..."}</div>;
+    return <div className="text-center py-20"><Spinner size="lg" /></div>;
   }
 
   if (!newsItem) {

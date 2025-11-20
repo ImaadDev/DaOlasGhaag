@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import sanityClient from "@/lib/sanityClient";
+import Spinner from "@/components/Spinner";
 
 export default function BreakingNews() {
   const pathname = usePathname();
@@ -45,7 +46,8 @@ export default function BreakingNews() {
 
   if (loading) {
     return (
-      <div className={`bg-red-600 text-white py-3 px-6 text-sm tracking-wide uppercase ${isUrdu ? "rtl" : "ltr"}`}>
+      <div className={`bg-red-600 text-white py-3 px-6 text-sm tracking-wide uppercase ${isUrdu ? "rtl" : "ltr"} flex items-center gap-2`}>
+        <Spinner size="sm" />
         <span className="font-semibold">
           {isUrdu ? "لوڈ ہو رہا ہے..." : "Loading..."}
         </span>
